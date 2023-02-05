@@ -3,6 +3,7 @@
 Technology stack used:
 
 * Angular
+* Typescript
 * ng-zorro
 * @angular/google-maps
 
