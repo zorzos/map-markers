@@ -1,27 +1,29 @@
-# TrgRzorzos
+# Map-markers app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+Technology stack used:
 
-## Development server
+* Angular
+* ng-zorro
+* @angular/google-maps
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+**Short blurb:** The application lets users register play around with a preset list of map markers.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
+The application (running at [http://localhost:4200](http://localhost:4200)) is designed with Angular and the use of ng-zorro library. 
+The first route of the application is displaying a map with some preset locations (found in assets/locations.json) and lets users interact with the map.
+The second route of the applications is displaying said map markers in a table that can be sorted, searched and also users can append new map marker data into it.
+To run the application locally, navigate to the root directory of this repository and run (once):
 
-## Build
+```
+npm i
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+And then to actually start the front end application:
 
-## Running unit tests
+```
+npm start
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Note: for the application to be actually runnable, one NEEDS to change the API key -- found in src/index.html
