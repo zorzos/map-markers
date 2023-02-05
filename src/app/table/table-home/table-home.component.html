@@ -1,0 +1,116 @@
+<span>
+    <button
+        class="add-location-btn" 
+        nz-button 
+        [nzType]="'primary'"
+        nzShape="round"
+        (click)="toggleModal()"
+    >
+        Add a new Location
+    </button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <label>Search:</label>
+    <input
+        class="search-input" 
+        (input)="onChangeSearchTerm($event.target.value)"
+        nz-input
+        placeholder="Search in all table fields"
+        type="text" 
+        size="30"
+    />
+</span>
+
+<nz-modal
+      [(nzVisible)]="isAddLocationModalVisible"
+      nzTitle="Add a new Location"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="toggleModal()"
+    >
+
+      <ng-template #modalContent>
+        <form 
+            nz-form
+            [formGroup]="validateForm"
+            (ngSubmit)="submitForm()"
+        >
+            <h4>New location details:</h4>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="locationName">Location name</nz-form-label>
+            <nz-form-item>
+                <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Please input a location name!">
+                    <input nz-input formControlName="locationName" id="locationName" />
+                </nz-form-control>
+            </nz-form-item>
+            
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="locationLatitude">Location latitude</nz-form-label>
+            <nz-form-item>
+                <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Please input a location latitude!">
+                    <input nz-input formControlName="locationLatitude" id="locationLatitude" />
+                </nz-form-control>
+            </nz-form-item>
+            
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="locationLongitude">Location longitude</nz-form-label>
+            <nz-form-item>
+                <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Please input a location longitude!">
+                    <input nz-input formControlName="locationLongitude" id="locationLongitude" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="default" nzShape="round" (click)="toggleModal()">Cancel</button>
+        <button nz-button nzType="primary" nzShape="round" (click)="submitForm()">Create</button>
+      </ng-template>
+    </nz-modal>
+
+<nz-table 
+    #editRowTable
+    #filterTable
+    nzBordered
+    [nzData]="locations"
+    [nzTotal]="locations.length"
+    nzSize="small"
+    nzResponsive="true"
+    [nzPageSize]="currentPageSize"
+>
+    <thead>
+        <tr>
+            <th
+                *ngFor="let column of columns"
+                [nzSortOrder]="column.sortOrder"
+                [nzSortFn]="column.sortFunction"
+                [nzSortDirections]="column.sortDirections"
+            >
+                {{ column.name }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let location of editRowTable.data; let i = index;" class="editable-row">
+            <td nzBreakWord>
+                <div class="editable-cell" [hidden]="editId === i" (click)="startEdit(i)">
+                    <!-- <ng-template [nzLocale]="en_US"> -->
+                        {{ location.name | titlecase }}
+                    <!-- </ng-template> -->
+                    
+                </div>
+                <input [hidden]="editId !== i" type="text" nz-input [(ngModel)]="location.name" (blur)="stopEdit()" />
+            </td>
+
+            <td nzBreakWord>
+                <div class="editable-cell" [hidden]="editId === i" (click)="startEdit(i)">
+                    {{ location.coordinates.lat }}
+                </div>
+                <input [hidden]="editId !== i" type="text" nz-input [(ngModel)]="location.coordinates.lat" (blur)="stopEdit()" />
+            </td>
+
+            <td nzBreakWord>
+                <div class="editable-cell" [hidden]="editId === i" (click)="startEdit(i)">
+                    {{ location.coordinates.lng }}
+                </div>
+                <input [hidden]="editId !== i" type="text" nz-input [(ngModel)]="location.coordinates.lng" (blur)="stopEdit()" />
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

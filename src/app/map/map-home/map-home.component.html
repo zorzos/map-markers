@@ -1,0 +1,29 @@
+<div nz-row class="map-row">
+    <div nz-col nzFlex="150px" *ngIf="currentLocationIndex >= 0">
+        <h3 class="location-title">Current Location:</h3>
+        <p><b>Name:&nbsp;</b>{{ locations[currentLocationIndex].name | titlecase }}</p>
+        <p><b>Coordinates:</b></p>
+        <b>Latitude:&nbsp;</b>{{ locations[currentLocationIndex].coordinates.lat }}
+        <b>Longitude:&nbsp;</b>{{ locations[currentLocationIndex].coordinates.lng }}
+    </div>
+
+    <div nz-col nzFlex="auto">
+        <google-map 
+            class="google-map" 
+            [options]="options"
+            [width]="currentLocationIndex > 0 ? mapWidth - 160 : mapWidth"
+            [height]="mapHeight - 60"
+        >
+            <map-marker
+                #marker="mapMarker"
+                *ngFor="let location of locations; let i = index;"
+                [position]="location.coordinates"   
+                (mapClick)="openInfoWindow(i, marker)"
+            >
+            </map-marker>
+            <map-info-window (closeclick)="closeInfoWindow()">
+                {{ infoWindowContent | titlecase }}
+            </map-info-window>
+        </google-map>
+    </div>
+</div >

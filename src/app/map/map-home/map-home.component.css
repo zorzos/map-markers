@@ -1,0 +1,10 @@
+.map-container {
+    display: flex;
+}
+
+.map-row {
+    padding-top: 10px;
+}
+.location-title {
+    text-decoration: underline;
+}

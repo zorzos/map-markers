@@ -1,0 +1,13 @@
+<ul nz-menu nzMode="horizontal">
+    <li
+        nz-menu-item
+        nzMatchRouter
+        *ngFor="let tab of tabs"
+    >
+        <a routerLink="/{{tab.title | lowercase}}" routerLinkActive="active" class="item">
+            {{ tab.title }}
+        </a>
+    </li>
+</ul>
+
+<router-outlet></router-outlet>
