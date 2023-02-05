@@ -9,7 +9,7 @@ Technology stack used:
 
 ---
 
-**Short blurb:** The application lets users register play around with a preset list of map markers.
+**Short blurb:** The application lets users play around with a preset list of map markers.
 
 ---
 The application (running at [http://localhost:4200](http://localhost:4200)) is designed with Angular and the use of ng-zorro library. 
