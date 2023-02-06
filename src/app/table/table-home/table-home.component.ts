@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Column, Location } from 'src/types';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { LocationService } from 'src/app/location.service';
 
-import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 @Component({
   selector: 'app-table-home',
@@ -54,27 +53,13 @@ export class TableHomeComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpClient,
     private fb: UntypedFormBuilder,
-    private i18n: NzI18nService
-  ) {}
+    private locationService: LocationService
+  ) {
+    this.locations = this.locationService.getLocations();
+  }
 
   ngOnInit(): void {
-    const locationsUrl = '/assets/locations.json'
-    this.http.get(locationsUrl).subscribe((response: any) => {
-      for (let item of response) {
-        const locationItem: Location = {
-          name: item.name,
-          coordinates: {
-            lat: item.coordinates[0],
-            lng: item.coordinates[1]
-          }
-        };
-        this.initialLocations.push(locationItem);
-        this.locations.push(locationItem);
-      }
-    })
-
     this.validateForm = this.fb.group({
       locationName: [null, [Validators.required]],
       locationLatitude: [null, [Validators.required]],

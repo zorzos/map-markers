@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
 import { Location } from 'src/types';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { LocationService } from 'src/app/location.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map-home.component.html',
   styleUrls: ['./map-home.component.css']
 })
-export class MapHomeComponent implements OnInit {
+export class MapHomeComponent {
   @ViewChild(MapInfoWindow) mapInfoWindow: MapInfoWindow;
   currentLocationIndex: number = -1;
   locations: Location[] = [];
@@ -24,21 +24,8 @@ export class MapHomeComponent implements OnInit {
   screenWidth: number = window.innerWidth;
   screenHeight: number = window.innerHeight;
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit(): void {
-    const locationsUrl = '/assets/locations.json'
-    this.http.get(locationsUrl).subscribe((response: any) => {
-      for (let item of response) {
-        this.locations.push({
-          name: item.name,
-          coordinates: {
-            lat: item.coordinates[0],
-            lng: item.coordinates[1]
-          }
-        })
-      }
-    })
+  constructor(private locationService: LocationService) {
+    this.locations = this.locationService.getLocations();
   }
 
   openInfoWindow(locationIndex: number, marker: MapMarker) {
